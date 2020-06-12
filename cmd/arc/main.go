@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/kiyor-cai-exa/archiver"
+	"github.com/kiyor-cai-exa/archiver/v4"
 	"github.com/nwaples/rardecode"
 )
 
