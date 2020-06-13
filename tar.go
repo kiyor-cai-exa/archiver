@@ -254,9 +254,6 @@ func (t *Tar) writeWalk(source, topLevelFolder, destination string) error {
 	}
 
 	return filepath.Walk(source, func(fpath string, info os.FileInfo, err error) error {
-		if t.WriterHijack != nil {
-			defer t.WriterHijack()
-		}
 		handleErr := func(err error) error {
 			if t.ContinueOnError {
 				log.Printf("[ERROR] Walking %s: %v", fpath, err)
@@ -303,6 +300,10 @@ func (t *Tar) writeWalk(source, topLevelFolder, destination string) error {
 		})
 		if err != nil {
 			return handleErr(fmt.Errorf("%s: writing: %s", fpath, err))
+		}
+
+		if t.WriterHijack != nil {
+			t.WriterHijack()
 		}
 
 		return nil
