@@ -50,7 +50,7 @@ type Tar struct {
 
 	readerWrapFn  func(io.Reader) (io.Reader, error)
 	writerWrapFn  func(io.Writer) (io.Writer, error)
-	WriterHijack  func()
+	WriterHijack  func(fpath string, info os.FileInfo, err error)
 	cleanupWrapFn func()
 }
 
@@ -303,7 +303,7 @@ func (t *Tar) writeWalk(source, topLevelFolder, destination string) error {
 		}
 
 		if t.WriterHijack != nil {
-			t.WriterHijack()
+			t.WriterHijack(fpath, info, err)
 		}
 
 		return nil
